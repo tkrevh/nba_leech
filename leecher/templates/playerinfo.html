@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Player info{% endblock %}
+
+{% block content %}
+    <h3>Player Info</h3>
+    {% if error %}
+        <p class="bg-danger">
+            {{ error }}
+        </p>
+    {% else %}
+        <div class="player-info-container">
+            <div class="player-photo-container">
+                <img src="{{ player_photo }}" alt="{{ player_first_name }} {{ player_last_name }}"
+                     class="player-photo"/>
+            </div>
+            <div class="player-personal-info-container">
+                <blockquote>
+                  <p>{{ player_first_name }} {{ player_last_name }}</p>
+                  <footer>Team <strong>{{ team_name }}, {{ team_city }}</strong></footer>
+                </blockquote>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Timeframe</th>
+                    <th>PTS</th>
+                    <th>AST</th>
+                    <th>REB</th>
+                    <th>PIE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="stats-numbers">
+                    <td>{{ player_stats_timeframe }}</td>
+                    <td>{{ player_stats_pts }}</td>
+                    <td>{{ player_stats_ast }}</td>
+                    <td>{{ player_stats_reb }}</td>
+                    <td>{{ player_stats_pie }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
