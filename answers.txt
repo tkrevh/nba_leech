@@ -1,0 +1,45 @@
+1A: Design database
+
+CREATE TABLE Player (
+	player_id serial NOT NULL,
+	first_name varchar(128) NOT NULL,
+	last_name varchar(128) NOT NULL,
+	rating DECIMAL NOT NULL,
+	birthday DATE NOT NULL,
+	team_id integer NOT NULL,
+	CONSTRAINT Player_pk PRIMARY KEY (player_id)
+);
+
+CREATE TABLE Team (
+	team_id serial NOT NULL,
+	name varchar(128) NOT NULL UNIQUE,
+	city varchar(64) NOT NULL,
+	country varchar(64) NOT NULL,
+	CONSTRAINT Team_pk PRIMARY KEY (team_id)
+);
+
+CREATE TABLE Game (
+	home_team integer NOT NULL,
+	guest_team integer NOT NULL,
+	date_played DATE NOT NULL,
+	home_score integer NOT NULL,
+	guest_score integer NOT NULL
+);
+
+ALTER TABLE Player ADD CONSTRAINT player_fk_team FOREIGN KEY (team_id) REFERENCES Team(team_id);
+ALTER TABLE Game ADD CONSTRAINT game_fk_home_team FOREIGN KEY (home_team) REFERENCES Team(team_id);
+ALTER TABLE Game ADD CONSTRAINT game_fk_guest_team FOREIGN KEY (guest_team) REFERENCES Team(team_id);
+
+CREATE INDEX player_team_idx ON Player (team_id);
+CREATE INDEX game_home_team_idx ON Game (home_team);
+CREATE INDEX game_guest_team_idx ON Game (guest_team);
+
+CREATE INDEX player_first_name_idx ON Player (lower(first_name) varchar_pattern_ops);
+CREATE INDEX player_last_name_idx ON Player (lower(last_name) varchar_pattern_ops);
+CREATE INDEX team_name_idx ON Team (lower(name) varchar_pattern_ops);
+CREATE INDEX game_date_played_idx ON Game (date_played);
+
+1B: Delete files
+find <root_dir> -type f -name "0aH*" -exec rm -f {} \;
+
+1C: See sorting.py
